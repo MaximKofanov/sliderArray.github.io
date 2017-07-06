@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>SliderFromTheArray</title>
+</head>
+<style>
+  #slider{
+    position: relative;
+    left: 50%;
+    margin-left: -300px;
+    width: 600px;
+    height: 400px;
+    background-image: url(https://pp.userapi.com/c837635/v837635380/3f26f/18V56yIfxac.jpg);
+    background-size: cover;
+    background-position: center;
+    border: 3px solid #555;
+    transition: 0.5s;
+  }
+  #slider:hover > .arrow{
+    visibility: visible;
+  }
+  #slider:hover .miniScrin{
+    visibility: visible;
+  }
+  .arrow{
+    position: absolute;
+    top: 50%;
+    margin-top: -30px;
+    border: 30px solid transparent;
+    opacity: 0.6;
+    visibility: hidden;
+    cursor: pointer;
+  }
+  .arrow:hover{
+    opacity: 0.9;
+  }
+  .arrowLeft{
+    border-left: 0;
+    display: inline-block;
+    border-right-color: #fff;  
+    left: 10px;
+  }
+  .arrowRight{
+    border-left-color: #fff;  
+    border-right: 0;
+    display: inline-block;
+    right: 10px;
+  }
+  #miniSlider{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    height: 50px;
+    bottom: 10px;
+    margin: 0;
+    padding: 0;
+  }
+  .miniScrin{
+    width: 36px;
+    height: 40px;
+    display: inline-block;
+    background-size: cover;
+    background-position: center;
+    margin: 0 5px;
+    border: 2px solid #333;
+    opacity: 0.5;
+    visibility: hidden;
+  }
+  .opMiniScrin{
+    opacity: 1;
+  }
+  .miniScrin:hover{
+    opacity: 1;
+    cursor: pointer;
+  }
+</style>
+  
+<body>
+  
+  <div id="slider">
+    <div onclick="sliderClickLeft()" class="arrow arrowLeft" onmousedown="return false"></div>
+    <div onclick="sliderClickRight()" class="arrow arrowRight" onmousedown="return false"></div>
+    <ul id="miniSlider"></ul>
+  </div>
+
+<script>
+  
+  var slide = [
+    "https://pp.userapi.com/c837635/v837635380/3f26f/18V56yIfxac.jpg",
+    "https://pp.userapi.com/c639722/v639722380/216e1/9FOr7m7Yf3g.jpg",
+    "https://pp.userapi.com/c837629/v837629380/2e586/34eI-pWVet0.jpg",
+    "https://pp.userapi.com/c837628/v837628380/320d6/P_JCNOpdnRY.jpg"];
+
+  for(var i = 0; i < slide.length; i++){    
+    if(~slide[i].indexOf("http")){
+      slide[i] = "url(" + slide[i] + ")";
+    }
+  }
+
+  var counter = 0;
+    
+  function sliderClickRight(){
+    if(counter == 0){
+      counter = 1;
+      slider.style.backgroundImage = slide[counter];
+    }else if(counter > 0 && counter < slide.length-1){
+      counter++;
+      slider.style.backgroundImage = slide[counter];
+    }else{
+      counter = 0;
+      slider.style.backgroundImage = slide[counter]; 
+    }
+  }
+  
+  function sliderClickLeft(){
+    if(counter == 0){
+      counter = slide.length-1;
+      slider.style.backgroundImage = slide[counter];
+    }else if(counter > 0){
+      counter--;
+      slider.style.backgroundImage = slide[counter];
+    }else{
+      counter = 0;
+    }
+  }
+  
+  function sliderMiniClick(number){
+    counter = number;
+    return slider.style.backgroundImage = slide[number];
+  }
+  
+  for(var i = 0; i < slide.length; i++){
+    var newSlid = document.createElement('li');
+    newSlid.classList.add('miniScrin');
+    newSlid.style.backgroundImage = slide[i];
+    miniSlider.appendChild(newSlid);
+    newSlid.setAttribute('onclick','sliderMiniClick('+i+');');
+  }
+
+</script>
+</body>
+</html>
